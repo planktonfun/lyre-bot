@@ -79,11 +79,23 @@ class Lyre:
         return combined_signal * Fade(is_in=False, duration=Lyre.FADE_DURATION)
 
     async def play(self, note: Note) -> Signal:
-        signal = Lyre.PITCH_MAP.get(note.pitch, Silence())
-        signal *= Stretch(rate=random.gauss(mu=Lyre.TUNING, sigma=Lyre.MODULATION))
+        signal = Lyre.PITCH_MAP.get(note.pitch, Silence(0))
+        rate = random.gauss(mu=Lyre.TUNING, sigma=Lyre.MODULATION)
+        signal *= Stretch(rate=rate)
         mixed_signal = self.buffer + signal
         self.buffer = mixed_signal[:, note.duration :]
         return mixed_signal[:, : note.duration]
+
+    async def simple_play(self, note: Note) -> Signal:
+        signal = Lyre.PITCH_MAP.get(note.pitch, Silence(0))
+        rate = random.gauss(mu=Lyre.TUNING, sigma=Lyre.MODULATION)
+        signal *= Stretch(rate=rate)
+        fade_duration = 0.3 * min(Lyre.RESONANCE_DURATION, note.duration)
+        signal = signal[:, : note.duration] * Fade(is_in=False, duration=fade_duration)
+        return signal
+
+    async def clear_buffer(self):
+        self.buffer = Silence(0)
 
 
 class Performer:
@@ -93,12 +105,22 @@ class Performer:
 
     async def load(self, notes: List[Note]):
         aiter_notes = self.aiter_notes(notes)
-        self.wav = Signal.concat(
-            [await self.play_note(note) async for note in aiter_notes]
-        )
+        note_len = len(notes)
+        if note_len > 50:
+            self.wav = Signal.concat(
+                [await self.simple_play_note(note) async for note in aiter_notes]
+            )
+        else:
+            self.wav = Signal.concat(
+                [await self.play_note(note) async for note in aiter_notes]
+            )
+        await self.instrument.clear_buffer()
 
     async def play_note(self, note: Note) -> Signal:
         return await self.instrument.play(note)
+
+    async def simple_play_note(self, note: Note) -> Signal:
+        return await self.instrument.simple_play(note)
 
     async def export(self, path):
         if self.wav is None:
