@@ -27,7 +27,9 @@ class KeymapReader(commands.Cog):
 
     @play.error
     async def play_error(self, ctx, error):
-        if isinstance(error, commands.CommandInvokeError):
+        if isinstance(error, commands.ConversionError):
+            await ctx.send("Keymap conversion failed.")
+        elif isinstance(error, commands.CommandInvokeError):
             if isinstance(error.original, discord.HTTPException):
                 await ctx.send("File upload has failed. The keymap might be too long.")
             else:
