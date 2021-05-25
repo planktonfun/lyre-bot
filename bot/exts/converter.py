@@ -34,7 +34,7 @@ KEY_MAP = {
 
 KEYMAP_MARKER = r"```(\n*.*)*```"
 LINE_DIVIDERS = r"[\|\n]"
-STANDARD_LINE_DURATION = 3e3
+STANDARD_LINE_DURATION = 2e3
 
 
 class KeyMapParser(commands.Converter):
@@ -48,7 +48,7 @@ class KeyMapParser(commands.Converter):
     async def get_keymap(content: str):
         keymap_match = re.search(KEYMAP_MARKER, content)
         if keymap_match:
-            return keymap_match.group()
+            return keymap_match.group().strip("`")
         else:
             raise ValueError
 
