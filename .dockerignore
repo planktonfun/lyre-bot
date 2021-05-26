@@ -1,0 +1,9 @@
+# Local configuration files
+.vscode
+.env
+
+# Local binaries
+*.wav
+
+# git
+.git*
