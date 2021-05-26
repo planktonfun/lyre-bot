@@ -118,11 +118,35 @@ Performance instructions:
 - [ ] Specify verse/chorus sections
 - [ ] Notating repeats
 
-## Development Installation
+## Instructions for local development (Linux/WSL)
 
-Pipenv for dependency management.
+Work in progress..
 
-Export BOT_TOKEN environmental variable and run with `python3 -m bot`
+### Pre-requisites
+
+1. Python 3.9
+2. Various build dependencies
+3. Pipenv
+
+### Installation
+
+```bash
+git clone https://github.com/EdmundYuen/lyre-bot.git
+cd lyre-bot/
+pipenv install
+```
+
+### Configuration
+
+Export the following environmental variables or create a .env file.
+
+```bash
+export BOT_TOKEN="bot token from discord developer portal"
+export BOT_PREFIX="!"
+export PYTHONPATH=$PYTHONPATH:$(pwd)/bot
+```
+
+Run the bot with `pipenv run python3 -m bot`
 
 ## Development wishlist
 
