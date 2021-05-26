@@ -1,5 +1,7 @@
 # lyre-bot
 
+[![Build and Deploy to Google Compute Engine](https://github.com/EdmundYuen/lyre-bot/actions/workflows/setup-gcloud.yml/badge.svg)](https://github.com/EdmundYuen/lyre-bot/actions/workflows/setup-gcloud.yml)
+
 Utility bot for the Genshin Lyre Discord server.
 
 ## Design Specs
