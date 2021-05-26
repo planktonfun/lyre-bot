@@ -133,6 +133,7 @@ Work in progress..
 ```bash
 git clone https://github.com/EdmundYuen/lyre-bot.git
 cd lyre-bot/
+export INSTALLATION_DIR=$(pwd)
 pipenv install
 ```
 
@@ -143,7 +144,7 @@ Export the following environmental variables or create a .env file.
 ```bash
 export BOT_TOKEN="bot token from discord developer portal"
 export BOT_PREFIX="!"
-export PYTHONPATH=$PYTHONPATH:$(pwd)/bot
+export PYTHONPATH=$PYTHONPATH:$INSTALLATION_DIR/bot
 ```
 
 Run the bot with `pipenv run python3 -m bot`
