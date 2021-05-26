@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  bot:
+    build: .
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_PREFIX: ${BOT_PREFIX}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 0.60gb
