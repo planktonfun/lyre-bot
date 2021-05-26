@@ -56,7 +56,8 @@ key map enclosed in triple backticks codeblock
 Pitch formats:
 
 - [x] P1 (PC): Use corresponding PC keyboard keys
-  - `[ZzXxCcVvBbNnMmAaSsDdFfGgHhJjQqWwEeRrTtYyUu]`
+  - [x] `[ZXCVBNMASDFGHJQWERTYU]`
+  - [ ] `[ZzXxCcVvBbNnMmAaSsDdFfGgHhJjQqWwEeRrTtYyUu]`
 - [ ] P2 (Solfege): Use corresponding solfege name and octave numbering
   - `(Do|do|Re|re|Mi|mi|Fa|fa|So|so|La|la|Ti|ti)[345]`
 - [ ] P3 (Pitch): Use standard pitch notation system
