@@ -10,7 +10,7 @@ FROM runtime-deps AS build-deps
 
 WORKDIR /build
 
-COPY Pipfile* .
+COPY Pipfile* /build/
 
 # Install build dependencies
 RUN set -ex \
