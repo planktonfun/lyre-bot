@@ -1,8 +1,8 @@
-from discord.ext import commands
-from typing import List
 import logging
 import re
+from typing import List
 
+from discord.ext import commands
 from exts.lyre import Note
 
 log = logging.getLogger(__name__)

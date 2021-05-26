@@ -1,9 +1,9 @@
-from gensound import Sine, Gain, Fade, Silence, Signal
-from collections import namedtuple
-from typing import List
 import logging
 import random
+from collections import namedtuple
+from typing import List
 
+from gensound import Fade, Gain, Signal, Silence, Sine
 from gensound.transforms import Stretch
 
 log = logging.getLogger(__name__)

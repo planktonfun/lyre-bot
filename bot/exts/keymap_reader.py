@@ -1,8 +1,7 @@
 import logging
+
 import discord
-
 from discord.ext import commands
-
 from exts.converter import KeyMapParser
 from exts.lyre import Lyre, Performer
 
@@ -36,7 +35,7 @@ class KeymapReader(commands.Cog):
                 await ctx.send(error)
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(
-                "I did not detect any keymaps. Please surround your keymap with \`\`\` \`\``"
+                "I did not detect any keymaps. Please surround your keymap with \\`\\`\\` \\`\\`\\`"
             )
         else:
             await ctx.send(error)
