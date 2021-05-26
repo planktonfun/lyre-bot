@@ -8,6 +8,10 @@ import os
 log = logging.getLogger()
 
 
+class Env:
+    IS_DEV = os.environ.get("IS_DEV_ENV", 0)
+
+
 class Log:
     LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 

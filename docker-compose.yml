@@ -5,6 +5,7 @@ services:
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
       BOT_PREFIX: ${BOT_PREFIX}
+      IS_DEV_ENV: ${IS_DEV_ENV}
     deploy:
       resources:
         limits:

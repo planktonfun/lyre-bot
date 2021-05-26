@@ -139,17 +139,20 @@ export INSTALLATION_DIR=$(pwd)
 pipenv install
 ```
 
-### Configuration
+### Runtime configuration
 
 Export the following environmental variables or create a .env file.
 
 ```bash
+export IS_DEV_ENV=1
 export BOT_TOKEN="bot token from discord developer portal"
 export BOT_PREFIX="!"
 export PYTHONPATH=$PYTHONPATH:$INSTALLATION_DIR/bot
 ```
 
 Run the bot with `pipenv run python3 -m bot`
+
+Check container deployment with `docker-compose up -d --build` and clean up with `docker-compose down`.
 
 ## Development wishlist
 

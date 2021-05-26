@@ -23,5 +23,13 @@ class LyreBot(commands.Bot):
             activity=discord.Game(name=f"Commands: {constants.Bot.PREFIX}help"),
         )
 
+    @classmethod
+    def create_for_dev(cls) -> "LyreBot":
+        """Create and return an instance of a LyreBot for development and testing."""
+        return cls(
+            command_prefix=constants.Bot.PREFIX,
+            status=discord.Status.do_not_disturb,
+        )
+
     def load_extensions(self):
         self.load_extension("bot.exts.keymap_reader")

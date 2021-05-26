@@ -7,7 +7,10 @@ from bot.logs import setup_logger
 
 log = logging.getLogger("bot")
 
-bot.instance = LyreBot.create()
+if constants.Env.IS_DEV:
+    bot.instance = LyreBot.create_for_dev()
+else:
+    bot.instance = LyreBot.create()
 
 
 def main():
