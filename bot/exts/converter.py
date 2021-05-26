@@ -3,7 +3,8 @@ import re
 from typing import List
 
 from discord.ext import commands
-from exts.lyre import Note
+
+from bot.exts.lyre import Note
 
 log = logging.getLogger(__name__)
 

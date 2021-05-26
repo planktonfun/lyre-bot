@@ -1,6 +1,6 @@
 import asyncio
 
-from exts.lyre import Lyre, Note, Performer
+from bot.exts.lyre import Lyre, Note, Performer
 
 
 async def aiter_notes(notes):

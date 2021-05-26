@@ -2,8 +2,9 @@ import logging
 
 import discord
 from discord.ext import commands
-from exts.converter import KeyMapParser
-from exts.lyre import Lyre, Performer
+
+from bot.exts.converter import KeyMapParser
+from bot.exts.lyre import Lyre, Performer
 
 log = logging.getLogger(__name__)
 

@@ -1,8 +1,8 @@
 import asyncio
 from textwrap import dedent
 
-from exts.converter import KeyMapParser
-from exts.lyre import Note
+from bot.exts.converter import KeyMapParser
+from bot.exts.lyre import Note
 
 raw_content = """~read
 ```
