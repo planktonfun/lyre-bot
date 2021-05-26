@@ -154,7 +154,7 @@ Export BOT_TOKEN environmental variable and run with `python3 -m bot`
 
 5. Bot usability
 
-   1. Help message with key map format example
+   1. Provide key map template through help command or when encountering conversion errors
    2. Error handling for command not found error (need newline between @lyre-bot and ```)
    3. Better documentation, tips and tricks for getting your desired output from the bot
 
