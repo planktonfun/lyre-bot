@@ -1,4 +1,5 @@
 import logging
+from argparse import Namespace
 
 import bot
 from bot import constants
@@ -7,17 +8,25 @@ from bot.logs import setup_logger
 
 log = logging.getLogger("bot")
 
-if constants.Env.IS_DEV:
-    bot.instance = LyreBot.create_for_dev()
-else:
-    bot.instance = LyreBot.create()
+args = Namespace(
+    is_dev=constants.Env.IS_DEV,
+    bot_token=constants.Bot.TOKEN,
+)
 
 
-def main():
+def get_bot_instance(is_dev):
+    if is_dev:
+        return LyreBot.create_for_dev()
+    else:
+        return LyreBot.create()
+
+
+def main(args):
     setup_logger()
+    bot.instance = get_bot_instance(args.is_dev)
     bot.instance.load_extensions()
-    bot.instance.run(constants.Bot.TOKEN)
+    bot.instance.run(args.bot_token)
 
 
 if __name__ == "__main__":
-    main()
+    main(args)
