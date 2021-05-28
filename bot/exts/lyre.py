@@ -122,13 +122,13 @@ class Performer:
     async def simple_play_note(self, note: Note) -> Signal:
         return await self.instrument.simple_play(note)
 
-    async def export(self, path):
+    async def export(self, path: str):
         if self.wav is None:
             raise AttributeError
         else:
             self.wav.export(path)
 
     @staticmethod
-    async def aiter_notes(notes):
+    async def aiter_notes(notes: List[Note]):
         for note in notes:
             yield note

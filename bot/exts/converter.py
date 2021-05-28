@@ -39,14 +39,14 @@ STANDARD_LINE_DURATION = 2e3
 
 
 class KeyMapParser(commands.Converter):
-    async def convert(self, ctx, _):
+    async def convert(self, ctx, _) -> List[Note]:
         keymap = await KeyMapParser.get_keymap(ctx.message.content)
         lines = await KeyMapParser.get_lines(keymap)
         notes = await KeyMapParser.parse_lines(lines)
         return notes
 
     @staticmethod
-    async def get_keymap(content: str):
+    async def get_keymap(content: str) -> str:
         keymap_match = re.search(KEYMAP_MARKER, content)
         if keymap_match:
             return keymap_match.group().strip("`")

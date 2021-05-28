@@ -14,14 +14,14 @@ args = Namespace(
 )
 
 
-def get_bot_instance(is_dev):
+def get_bot_instance(is_dev: int) -> LyreBot:
     if is_dev:
         return LyreBot.create_for_dev()
     else:
         return LyreBot.create()
 
 
-def main(args):
+def main(args: Namespace):
     setup_logger()
     bot.instance = get_bot_instance(args.is_dev)
     bot.instance.load_extensions()
