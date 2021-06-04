@@ -6,7 +6,7 @@ from discord import Embed
 from discord.ext import commands
 
 from bot.constants import DejaVu
-from bot.exts.converter import KeyMapParser
+from bot.exts.converter import KeyMapParser, STANDARD_LINE_DURATION
 from bot.exts.lyre import Lyre, Performer
 
 log = logging.getLogger(__name__)
@@ -18,9 +18,9 @@ def create_embed(ctx: commands.Context):
     author = ctx.author
     notes = ctx.args[-1]
     notes_repr = "".join(
-        f"{note.pitch:2} /{1000/note.duration:4n} | "
+        f"{note.pitch:2} /{STANDARD_LINE_DURATION/note.duration:4n} | "
         if i % 4 != 3
-        else f"{note.pitch:2} /{1000/note.duration:4n}\n"
+        else f"{note.pitch:2} /{STANDARD_LINE_DURATION/note.duration:4n}\n"
         for i, note in enumerate(notes)
     )
     if len(notes_repr) > 2042:
