@@ -33,3 +33,7 @@ class LyreBot(commands.Bot):
 
     def load_extensions(self):
         self.load_extension("bot.exts.keymap_reader")
+
+    def load_extensions_for_dev(self):
+        self.load_extension("bot.exts.keymap_reader")
+        self.load_extension("bot.exts.dev_utils")
