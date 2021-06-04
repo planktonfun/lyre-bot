@@ -18,9 +18,9 @@ def create_embed(ctx: commands.Context):
     author = ctx.author
     notes = ctx.args[-1]
     notes_repr = "".join(
-        f"{note.pitch:2} /{STANDARD_LINE_DURATION/note.duration:4n} | "
-        if i % 4 != 3
-        else f"{note.pitch:2} /{STANDARD_LINE_DURATION/note.duration:4n}\n"
+        f"{note.pitch:2}/{STANDARD_LINE_DURATION/note.duration:2n} | "
+        if i % 8 != 7
+        else f"{note.pitch:2}/{STANDARD_LINE_DURATION/note.duration:2n}\n"
         for i, note in enumerate(notes)
     )
     if len(notes_repr) > 2042:
