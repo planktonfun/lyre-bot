@@ -19,3 +19,12 @@ class Log:
 class Bot:
     PREFIX = os.environ.get("BOT_PREFIX", "~")
     TOKEN = os.environ.get("BOT_TOKEN")
+
+
+class DejaVu:
+    LYRICS = (
+        "Déjà vu, I've just been in this place before",
+        "Higher on the street, and I know it's my time to go",
+        "Calling you, and the search is a mystery",
+        "Standing on my feet, it's so hard when I try to be me, woah",
+    )
