@@ -147,7 +147,7 @@ Export the following environmental variables or create a .env file.
 export IS_DEV_ENV=1
 export BOT_TOKEN="bot token from discord developer portal"
 export BOT_PREFIX="!"
-export PYTHONPATH=$PYTHONPATH:$INSTALLATION_DIR/bot
+export PYTHONPATH=$PYTHONPATH:$INSTALLATION_DIR
 ```
 
 Run the bot with `pipenv run python3 -m bot`
