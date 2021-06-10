@@ -8,6 +8,8 @@ raw_content = """~read
 ```
 | ZBADGQ | XBMSGJ | CNADH  | CBMDG  |
 | ZVNAF  | ZBADG  | VNASH  | XVBMSG |
+| zbadgq | xbmsgj | cnadh  | cbmdg  |
+| zvnaf  | zbadg  | vnash  | xvbmsg |
 ```"""
 
 test_text = dedent(
