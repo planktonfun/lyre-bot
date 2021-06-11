@@ -14,7 +14,7 @@ raw_content_basic = """~read
 
 raw_content_full = """~read
 ```
-# bpm 123
+# bpm 40
 | E E E | [ee]EE {EFG} E | [FF]FFF[AA](FF) | GGGGGGGG  |
 ```"""
 
@@ -87,8 +87,16 @@ async def main():
     keymap = await KeyMapParser.get_keymap(raw_content_basic)
     print(keymap) # check if everything is ok
     print('=====================================')
+    lines = await KeyMapParser.get_lines(dedent(keymap))
+    for line in lines:
+        print(line) # check if everything is ok
+    print('=====================================')
+    notes = await KeyMapParser.parse_lines(lines)
+    for note in notes:
+        print(note) # check if everything is ok
+    print('=====================================')
     result = await KeyMapParser.get_bpm(raw_content_full)
-    print(KeyMapParser.has_bpm, KeyMapParser.bpm, result) # should be 1 121.9512 aand a filtered string with no bpm in it
+    print(KeyMapParser.has_bpm, KeyMapParser.bpm, result) # should be 1 375 aand a filtered string with no bpm in it
     print('=====================================')
     keymap = await KeyMapParser.get_keymap(raw_content_full)
     print(keymap) # check if everything is ok
