@@ -59,7 +59,7 @@ Pitch formats:
 
 - [x] P1 (PC): Use corresponding PC keyboard keys
   - [x] `[ZXCVBNMASDFGHJQWERTYU]`
-  - [ ] `[ZzXxCcVvBbNnMmAaSsDdFfGgHhJjQqWwEeRrTtYyUu]`
+  - [x] `[ZzXxCcVvBbNnMmAaSsDdFfGgHhJjQqWwEeRrTtYyUu]`
 - [ ] P2 (Solfege): Use corresponding solfege name and octave numbering
   - `(Do|do|Re|re|Mi|mi|Fa|fa|So|so|La|la|Ti|ti)[345]`
 - [ ] P3 (Pitch): Use standard pitch notation system
@@ -67,7 +67,7 @@ Pitch formats:
 
 Tempo formats:
 
-- [ ] T1 (BPM): Specify beats per minute with positive integer
+- [x] T1 (BPM): Specify beats per minute with positive integer
   - `# (BPM|bpm): ([1-9]\d*)`
 
 Rhythm formats:
@@ -93,13 +93,13 @@ Rhythm formats:
 
 Multi-notes / Chords:
 
-- [ ] Arppegios: play notes smoothly and quickly one after the other
+- [x] Arppegios: play notes smoothly and quickly one after the other
 
   - e.g. `{ZBADGQ}`
 
-- [ ] Chords: play more than one note at the same time
+- [x] Chords: play more than one note at the same time
 
-  - e.g. `(ADG) (SGJ) (ADH) (MDG)`
+  - e.g. `[ADG] [SGJ] [ADH] [MDG]`
 
 - [ ] Trills: alternate between two adjacent notes
 
