@@ -20,7 +20,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCE_PROJECT }}
-  GCE_INSTANCE: lyre-bot-f1-micro-free-tier
+  GCE_INSTANCE: lyre-bot-f1-micro-free-tier-1
   GCE_INSTANCE_ZONE: us-central1-a
 
 jobs:
