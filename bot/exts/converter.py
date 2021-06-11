@@ -60,7 +60,6 @@ KEYMAP_MARKER = r"```(\n*.*)*```"
 LINE_DIVIDERS = r"[\|\n]"
 STANDARD_LINE_DURATION = 2e3
 ZERO_DELAY = 10
-BPM_CAPTURE = r"#\s?(BPM|bpm):?\s?(\d+)"
 
 class KeyMapParser():
     inside_curly = 0
