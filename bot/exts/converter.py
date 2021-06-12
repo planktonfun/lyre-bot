@@ -74,6 +74,13 @@ class KeyMapParser():
         lines = await KeyMapParser.get_lines(keymap)
         notes = await KeyMapParser.parse_lines(lines)
         return notes
+
+    @staticmethod
+    async def support_brackets(content: str) -> str:
+        content = re.sub(r"\(", '[', content)
+        content = re.sub(r"\)", ']', content)
+        return content
+
     @staticmethod
     async def get_bpm(content: str) -> str:
         pattern = re.compile(BPM_CAPTURE)
@@ -87,8 +94,9 @@ class KeyMapParser():
         return content
 
     @staticmethod
-    async def get_keymap(raw_content: str) -> str:
-        content = await KeyMapParser.get_bpm(raw_content)
+    async def get_keymap(content: str) -> str:
+        content = await KeyMapParser.get_bpm(content)
+        content = await KeyMapParser.support_brackets(content)
         keymap_match = re.search(KEYMAP_MARKER, content)
         if keymap_match:
             return keymap_match.group().strip("`")

@@ -99,7 +99,7 @@ Multi-notes / Chords:
 
 - [x] Chords: play more than one note at the same time
 
-  - e.g. `[ADG] [SGJ] [ADH] [MDG]`
+  - e.g. `(ADG) (SGJ) (ADH) (MDG) [ADG] [SGJ] [ADH] [MDG]`
 
 - [ ] Trills: alternate between two adjacent notes
 

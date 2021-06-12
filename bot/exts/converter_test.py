@@ -114,6 +114,10 @@ async def main():
     print(results) # should be 34
     print('=====================================')
     await KeyMapParser.get_keymap(raw_content)
+    print('=====================================')
+    target_string = "[ee]EE {EFG} E (FFF) | [FF]FFF[AA](FF"
+    filtered = await KeyMapParser.support_brackets(target_string)
+    print(filtered) # () should be converted to []
 
 
 asyncio.run(main())
