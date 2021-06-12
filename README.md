@@ -64,6 +64,8 @@ Pitch formats:
   - `(Do|do|Re|re|Mi|mi|Fa|fa|So|so|La|la|Ti|ti)[345]`
 - [ ] P3 (Pitch): Use standard pitch notation system
   - `[CcDdEeFfGgAaBb][345]`
+- [x] P4 (RowColumn): Use row column notation system
+  - `[AaBbCc][123]`
 
 Tempo formats:
 

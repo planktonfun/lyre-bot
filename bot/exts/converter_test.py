@@ -123,6 +123,10 @@ async def main():
     filtered = await KeyMapParser.support_solfege(target_string)
     print(filtered) # Notation should be converted to Letters
     print('=====================================')
+    target_string = "A1 a2 A3 B1 b2 B7 C7 c6 c4" # Q W E A S J M N V
+    filtered = await KeyMapParser.support_row_column_notation(target_string)
+    print(filtered) # Notation should be converted to Letters
+    print('=====================================')
     await KeyMapParser.get_keymap(raw_content)
 
 

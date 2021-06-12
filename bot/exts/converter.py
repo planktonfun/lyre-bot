@@ -78,6 +78,30 @@ SOLFEGE_MAP = {
     "do1": "U",
 }
 
+ROW_COLUMN_MAP = {
+    "c1": "Z",
+    "c2": "X",
+    "c3": "C",
+    "c4": "V",
+    "c5": "B",
+    "c6": "N",
+    "c7": "M",
+    "b1": "A",
+    "b2": "S",
+    "b3": "D",
+    "b4": "F",
+    "b5": "G",
+    "b6": "H",
+    "b7": "J",
+    "a1": "Q",
+    "a2": "W",
+    "a3": "E",
+    "a4": "R",
+    "a5": "T",
+    "a6": "Y",
+    "a7": "U",
+}
+
 BPM_CAPTURE = r"#\s?(BPM|bpm):?\s?(\d+)"
 BRACKET_GROUPING = r"((\{\w+\})|(\[\w+\])|\w)"
 KEYMAP_MARKER = r"```(\n*.*)*```"
@@ -85,6 +109,7 @@ LINE_DIVIDERS = r"[\|\n]"
 STANDARD_LINE_DURATION = 2e3
 ZERO_DELAY = 10
 SOLFEGE_NOTATION = r"(do|re|mi|fa|so|la|ti)[123]"
+ROW_COLUMN_NOTATION = r"[abc][1-7]"
 
 class KeyMapParser(commands.Converter):
     def __init__(self):
@@ -100,6 +125,21 @@ class KeyMapParser(commands.Converter):
         lines = await KeyMapParser.get_lines(keymap)
         notes = await KeyMapParser.parse_lines(lines)
         return notes
+
+    @staticmethod
+    async def support_row_column_notation(raw_content: str) -> str:
+        content = raw_content.lower()
+        pattern = re.compile(ROW_COLUMN_NOTATION)
+        has_notation = False
+        for match in pattern.finditer(content):
+            has_notation = True
+
+        if(has_notation == True):
+            for key in ROW_COLUMN_MAP:
+                content = content.replace(key, ROW_COLUMN_MAP.get(key))
+            return content
+
+        return raw_content
 
     @staticmethod
     async def support_solfege(raw_content: str) -> str:
@@ -137,6 +177,7 @@ class KeyMapParser(commands.Converter):
         content = await self.get_bpm(content)
         content = await KeyMapParser.support_brackets(content)
         content = await KeyMapParser.support_solfege(content)
+        content = await KeyMapParser.support_row_column_notation(content)
         keymap_match = re.search(KEYMAP_MARKER, content)
         if keymap_match:
             return keymap_match.group().strip("`")
