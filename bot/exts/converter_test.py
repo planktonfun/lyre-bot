@@ -81,31 +81,33 @@ test_notes = [
 async def main():
 
     print('=====================================')
-    result = await KeyMapParser.get_bpm(raw_content_basic)
-    print(KeyMapParser.has_bpm, KeyMapParser.bpm, result) # should be 0 0 and a filtered string with no bpm in it
+    parser = KeyMapParser()
+    result = await parser.get_bpm(raw_content_basic)
+    print(parser.has_bpm, parser.bpm, result) # should be False 0 and a filtered string with no bpm in it
     print('=====================================')
-    keymap = await KeyMapParser.get_keymap(raw_content_basic)
+    keymap = await parser.get_keymap(raw_content_basic)
     print(keymap) # check if everything is ok
     print('=====================================')
     lines = await KeyMapParser.get_lines(dedent(keymap))
     for line in lines:
         print(line) # check if everything is ok
     print('=====================================')
-    notes = await KeyMapParser.parse_lines(lines)
+    notes = await parser.parse_lines(lines)
     for note in notes:
         print(note) # check if everything is ok
     print('=====================================')
-    result = await KeyMapParser.get_bpm(raw_content_full)
-    print(KeyMapParser.has_bpm, KeyMapParser.bpm, result) # should be 1 375 aand a filtered string with no bpm in it
+    parser = KeyMapParser()
+    result = await parser.get_bpm(raw_content_full)
+    print(parser.has_bpm, parser.bpm, result) # should be True 375 and a filtered string with no bpm in it
     print('=====================================')
-    keymap = await KeyMapParser.get_keymap(raw_content_full)
+    keymap = await parser.get_keymap(raw_content_full)
     print(keymap) # check if everything is ok
     print('=====================================')
     lines = await KeyMapParser.get_lines(dedent(keymap))
     for line in lines:
         print(line) # check if everything is ok
     print('=====================================')
-    notes = await KeyMapParser.parse_lines(lines)
+    notes = await parser.parse_lines(lines)
     for note in notes:
         print(note) # check if everything is ok
     print('=====================================')
@@ -113,11 +115,10 @@ async def main():
     results = await KeyMapParser.count_keys_by_group(target_string)
     print(results) # should be 34
     print('=====================================')
-    await KeyMapParser.get_keymap(raw_content)
-    print('=====================================')
-    target_string = "[ee]EE {EFG} E (FFF) | [FF]FFF[AA](FF"
+    target_string = "[ee]EE {EFG} E (FFF) | [FF]FFF[AA](FF)"
     filtered = await KeyMapParser.support_brackets(target_string)
     print(filtered) # () should be converted to []
+    await KeyMapParser.get_keymap(raw_content)
 
 
 asyncio.run(main())

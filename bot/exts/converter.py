@@ -62,12 +62,13 @@ STANDARD_LINE_DURATION = 2e3
 ZERO_DELAY = 10
 
 class KeyMapParser(commands.Converter):
-    inside_curly = False
-    inside_bracket = False
-    use_last_duration = False
-    last_duration = 0
-    has_bpm = False
-    bpm = 0
+    def __init__(self):
+        self.inside_curly = False
+        self.inside_bracket = False
+        self.use_last_duration = False
+        self.last_duration = 0
+        self.has_bpm = False
+        self.bpm = 0
 
     async def convert(self, ctx, _):
         keymap = await KeyMapParser.get_keymap(ctx.message.content)
@@ -81,21 +82,19 @@ class KeyMapParser(commands.Converter):
         content = re.sub(r"\)", ']', content)
         return content
 
-    @staticmethod
-    async def get_bpm(content: str) -> str:
+    async def get_bpm(self, content: str) -> str:
         pattern = re.compile(BPM_CAPTURE)
         for match in pattern.finditer(content):
-            KeyMapParser.bpm = 60000/float(match.group(2))/4
-            KeyMapParser.has_bpm = True
+            self.bpm = 60000/float(match.group(2))/4
+            self.has_bpm = True
 
-        if(KeyMapParser.has_bpm == True):
+        if(self.has_bpm == True):
             return re.sub(BPM_CAPTURE, '', content)
 
         return content
 
-    @staticmethod
-    async def get_keymap(content: str) -> str:
-        content = await KeyMapParser.get_bpm(content)
+    async def get_keymap(self, content: str) -> str:
+        content = await self.get_bpm(content)
         content = await KeyMapParser.support_brackets(content)
         keymap_match = re.search(KEYMAP_MARKER, content)
         if keymap_match:
@@ -110,38 +109,35 @@ class KeyMapParser(commands.Converter):
         lines = [line.strip().split() for line in raw_lines]
         return lines
 
-    @staticmethod
-    async def calculate_duration(duration: float, words: int, keys: int) -> float:
-        if (KeyMapParser.use_last_duration == 1):
-            KeyMapParser.use_last_duration = 0
-            return KeyMapParser.last_duration
-        if (KeyMapParser.inside_bracket == True):
+    async def calculate_duration(self, duration: float, words: int, keys: int) -> float:
+        if (self.use_last_duration == 1):
+            self.use_last_duration = 0
+            return self.last_duration
+        if (self.inside_bracket == True):
             return ZERO_DELAY
-        if (KeyMapParser.inside_curly == True):
-            return KeyMapParser.last_duration/2
-        if (KeyMapParser.has_bpm == 1):
-            return KeyMapParser.bpm
+        if (self.inside_curly == True):
+            return self.last_duration/2
+        if (self.has_bpm == 1):
+            return self.bpm
         else:
             return duration / (words * keys)
 
-    @staticmethod
-    async def calculate_last_duration(index: int, wordarray):
+    async def calculate_last_duration(self, index: int, wordarray):
         if(index+1 < len(wordarray)):
             if (wordarray[index+1] == "]"):
-                KeyMapParser.use_last_duration = 1
+                self.use_last_duration = 1
                 if(index+2 == len(wordarray)):
-                    KeyMapParser.last_duration += KeyMapParser.bpm
+                    self.last_duration += self.bpm
             if (wordarray[index+1] == "}"):
-                KeyMapParser.use_last_duration = 1
+                self.use_last_duration = 1
                 if(index+2 == len(wordarray)):
-                    KeyMapParser.last_duration += KeyMapParser.bpm
+                    self.last_duration += self.bpm
         return 0
 
-    @staticmethod
-    async def calculate_pause_duration(index: int, wordlen: int):
-        if(KeyMapParser.has_bpm == True):
+    async def calculate_pause_duration(self, index: int, wordlen: int):
+        if(self.has_bpm == True):
             if(index+1 == wordlen):
-                return KeyMapParser.bpm
+                return self.bpm
         return 0
 
     @staticmethod
@@ -152,28 +148,27 @@ class KeyMapParser(commands.Converter):
             matches.append(match.group(1))
         return len(matches)
 
-    @staticmethod
-    async def parse_lines(lines: List[List[str]]):
+    async def parse_lines(self, lines: List[List[str]]):
         notes = []
         for line in lines:
             n_words = len(line)
             for word in line:
                 n_keys = await KeyMapParser.count_keys_by_group(word)
                 for idx, key in enumerate(word):
-                    await KeyMapParser.calculate_last_duration(idx, word);
+                    await self.calculate_last_duration(idx, word);
                     if (key == "{"):
-                        KeyMapParser.last_duration = await KeyMapParser.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
-                        KeyMapParser.inside_curly = True
+                        self.last_duration = await self.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
+                        self.inside_curly = True
                     elif (key == "}"):
-                        KeyMapParser.inside_curly = False
+                        self.inside_curly = False
                     elif (key == "["):
-                        KeyMapParser.last_duration = await KeyMapParser.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
-                        KeyMapParser.inside_bracket = True
+                        self.last_duration = await self.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
+                        self.inside_bracket = True
                     elif (key == "]"):
-                        KeyMapParser.inside_bracket = False
+                        self.inside_bracket = False
                     else:
-                        duration = await KeyMapParser.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
-                        duration += await KeyMapParser.calculate_pause_duration(idx, len(word))
+                        duration = await self.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
+                        duration += await self.calculate_pause_duration(idx, len(word))
                         pitch = KEY_MAP.get(key, "R")
                         notes.append(Note(pitch=pitch, duration=duration))
         return notes
