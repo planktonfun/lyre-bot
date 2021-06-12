@@ -61,7 +61,7 @@ LINE_DIVIDERS = r"[\|\n]"
 STANDARD_LINE_DURATION = 2e3
 ZERO_DELAY = 10
 
-class KeyMapParser():
+class KeyMapParser(commands.Converter):
     inside_curly = 0
     inside_bracket = 0
     use_last_duration = 0
