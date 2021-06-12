@@ -62,11 +62,11 @@ STANDARD_LINE_DURATION = 2e3
 ZERO_DELAY = 10
 
 class KeyMapParser(commands.Converter):
-    inside_curly = 0
-    inside_bracket = 0
-    use_last_duration = 0
+    inside_curly = False
+    inside_bracket = False
+    use_last_duration = False
     last_duration = 0
-    has_bpm = 0
+    has_bpm = False
     bpm = 0
 
     async def convert(self, ctx, _):
@@ -86,9 +86,9 @@ class KeyMapParser(commands.Converter):
         pattern = re.compile(BPM_CAPTURE)
         for match in pattern.finditer(content):
             KeyMapParser.bpm = 60000/float(match.group(2))/4
-            KeyMapParser.has_bpm = 1
+            KeyMapParser.has_bpm = True
 
-        if(KeyMapParser.has_bpm == 1):
+        if(KeyMapParser.has_bpm == True):
             return re.sub(BPM_CAPTURE, '', content)
 
         return content
@@ -115,9 +115,9 @@ class KeyMapParser(commands.Converter):
         if (KeyMapParser.use_last_duration == 1):
             KeyMapParser.use_last_duration = 0
             return KeyMapParser.last_duration
-        if (KeyMapParser.inside_bracket == 1):
+        if (KeyMapParser.inside_bracket == True):
             return ZERO_DELAY
-        if (KeyMapParser.inside_curly == 1):
+        if (KeyMapParser.inside_curly == True):
             return KeyMapParser.last_duration/2
         if (KeyMapParser.has_bpm == 1):
             return KeyMapParser.bpm
@@ -139,7 +139,7 @@ class KeyMapParser(commands.Converter):
 
     @staticmethod
     async def calculate_pause_duration(index: int, wordlen: int):
-        if(KeyMapParser.has_bpm == 1):
+        if(KeyMapParser.has_bpm == True):
             if(index+1 == wordlen):
                 return KeyMapParser.bpm
         return 0
@@ -163,14 +163,14 @@ class KeyMapParser(commands.Converter):
                     await KeyMapParser.calculate_last_duration(idx, word);
                     if (key == "{"):
                         KeyMapParser.last_duration = await KeyMapParser.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
-                        KeyMapParser.inside_curly = 1
+                        KeyMapParser.inside_curly = True
                     elif (key == "}"):
-                        KeyMapParser.inside_curly = 0
+                        KeyMapParser.inside_curly = False
                     elif (key == "["):
                         KeyMapParser.last_duration = await KeyMapParser.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
-                        KeyMapParser.inside_bracket = 1
+                        KeyMapParser.inside_bracket = True
                     elif (key == "]"):
-                        KeyMapParser.inside_bracket = 0
+                        KeyMapParser.inside_bracket = False
                     else:
                         duration = await KeyMapParser.calculate_duration(STANDARD_LINE_DURATION, n_words, n_keys)
                         duration += await KeyMapParser.calculate_pause_duration(idx, len(word))
