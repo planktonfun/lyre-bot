@@ -60,7 +60,7 @@ Pitch formats:
 - [x] P1 (PC): Use corresponding PC keyboard keys
   - [x] `[ZXCVBNMASDFGHJQWERTYU]`
   - [x] `[ZzXxCcVvBbNnMmAaSsDdFfGgHhJjQqWwEeRrTtYyUu]`
-- [ ] P2 (Solfege): Use corresponding solfege name and octave numbering
+- [x] P2 (Solfege): Use corresponding solfege name and octave numbering
   - `(Do|do|Re|re|Mi|mi|Fa|fa|So|so|La|la|Ti|ti)[345]`
 - [ ] P3 (Pitch): Use standard pitch notation system
   - `[CcDdEeFfGgAaBb][345]`

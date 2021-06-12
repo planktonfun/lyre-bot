@@ -54,12 +54,37 @@ KEY_MAP = {
     "-": "R",
 }
 
+SOLFEGE_MAP = {
+    "ti3": "Z",
+    "la3": "X",
+    "so3": "C",
+    "fa3": "V",
+    "mi3": "B",
+    "re3": "N",
+    "do3": "M",
+    "ti2": "A",
+    "la2": "S",
+    "so2": "D",
+    "fa2": "F",
+    "mi2": "G",
+    "re2": "H",
+    "do2": "J",
+    "ti1": "Q",
+    "la1": "W",
+    "so1": "E",
+    "fa1": "R",
+    "mi1": "T",
+    "re1": "Y",
+    "do1": "U",
+}
+
 BPM_CAPTURE = r"#\s?(BPM|bpm):?\s?(\d+)"
 BRACKET_GROUPING = r"((\{\w+\})|(\[\w+\])|\w)"
 KEYMAP_MARKER = r"```(\n*.*)*```"
 LINE_DIVIDERS = r"[\|\n]"
 STANDARD_LINE_DURATION = 2e3
 ZERO_DELAY = 10
+SOLFEGE_NOTATION = r"(do|re|mi|fa|so|la|ti)[123]"
 
 class KeyMapParser(commands.Converter):
     def __init__(self):
@@ -75,6 +100,21 @@ class KeyMapParser(commands.Converter):
         lines = await KeyMapParser.get_lines(keymap)
         notes = await KeyMapParser.parse_lines(lines)
         return notes
+
+    @staticmethod
+    async def support_solfege(raw_content: str) -> str:
+        content = raw_content.lower()
+        pattern = re.compile(SOLFEGE_NOTATION)
+        has_solfege = False
+        for match in pattern.finditer(content):
+            has_solfege = True
+
+        if(has_solfege == True):
+            for key in SOLFEGE_MAP:
+                content = content.replace(key, SOLFEGE_MAP.get(key))
+            return content
+
+        return raw_content
 
     @staticmethod
     async def support_brackets(content: str) -> str:
@@ -96,6 +136,7 @@ class KeyMapParser(commands.Converter):
     async def get_keymap(self, content: str) -> str:
         content = await self.get_bpm(content)
         content = await KeyMapParser.support_brackets(content)
+        content = await KeyMapParser.support_solfege(content)
         keymap_match = re.search(KEYMAP_MARKER, content)
         if keymap_match:
             return keymap_match.group().strip("`")

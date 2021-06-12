@@ -118,6 +118,11 @@ async def main():
     target_string = "[ee]EE {EFG} E (FFF) | [FF]FFF[AA](FF)"
     filtered = await KeyMapParser.support_brackets(target_string)
     print(filtered) # () should be converted to []
+    print('=====================================')
+    target_string = "Do1 Do2 Do3 La1 La2 La3 Ti1 Mi3" # U J M W S X Q B
+    filtered = await KeyMapParser.support_solfege(target_string)
+    print(filtered) # Notation should be converted to Letters
+    print('=====================================')
     await KeyMapParser.get_keymap(raw_content)
 
 
