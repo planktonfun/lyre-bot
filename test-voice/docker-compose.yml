@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+  nano:
+    container_name: bot
+    build: .
+    # command: python bot/sound.test.py
+    # command: python bot/test.py
+    command: python bot/client.py
+    volumes:
+      - ./bot:/app/bot
+      - ./:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DISCORD_BOT_TOKEN: "MjEyOTQ5MzMzNDg0NTAzMDUw.V6tChQ.36sGp0_qA1CusnSN8rQ012IXCL8"
