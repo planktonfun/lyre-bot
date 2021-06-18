@@ -13,4 +13,4 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DISCORD_BOT_TOKEN: "MjEyOTQ5MzMzNDg0NTAzMDUw.V6tChQ.36sGp0_qA1CusnSN8rQ012IXCL8"
+      DISCORD_BOT_TOKEN: "PUT YOUR OWN TOKEN HERE SAYS DISCORD"
