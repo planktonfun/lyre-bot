@@ -121,7 +121,7 @@ class KeyMapParser(commands.Converter):
         self.bpm = 0
 
     async def convert(self, ctx, _):
-        keymap = await self.get_keymap(message)
+        keymap = await self.get_keymap(ctx.message.content)
         lines = await KeyMapParser.get_lines(keymap)
         notes = await self.parse_lines(lines)
         return notes
