@@ -13,4 +13,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DISCORD_BOT_TOKEN: "PUT YOUR OWN TOKEN HERE SAYS DISCORD"
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 0.60gb
