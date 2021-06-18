@@ -1,11 +1,19 @@
-version: "3.9"
+version: '3.5'
+
 services:
-  bot:
+  nano:
+    container_name: bot
     build: .
+    # command: python bot/sound.test.py
+    # command: python bot/test.py
+    command: python bot/client.py
+    volumes:
+      - ./bot:/app/bot
+      - ./:/app
+    ports:
+      - "8000:8000"
     environment:
-      BOT_TOKEN: ${BOT_TOKEN}
-      BOT_PREFIX: ${BOT_PREFIX}
-      IS_DEV_ENV: ${IS_DEV_ENV}
+      DISCORD_BOT_TOKEN: ${BOT_TOKEN}
     deploy:
       resources:
         limits:
